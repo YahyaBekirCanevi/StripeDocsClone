@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "dev": "concurrently \"bunx @tailwindcss/cli -i src/input.css -o src/index.css --watch\" \"bun --hot src/index.ts\"",
     "build": "bunx @tailwindcss/cli -i src/input.css -o src/index.css --minify && bun build ./src/index.html --outdir=dist --sourcemap --target=browser --minify --define:process.env.NODE_ENV='\"production\"' --env='BUN_PUBLIC_*'",
     "start": "NODE_ENV=production bun src/index.ts"
