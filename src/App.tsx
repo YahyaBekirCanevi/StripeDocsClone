@@ -107,6 +107,7 @@ function FenceComponent({
 function RightComponent({ children }: { children: React.ReactNode }) {
   return <div className="space-y-6">{children}</div>;
 }
+(RightComponent as any).isRightComponent = true;
 
 // Section Component (Stripe Split Column)
 function SectionComponent({
@@ -122,12 +123,12 @@ function SectionComponent({
   const leftChildren = React.Children.toArray(children).filter(
     (child) =>
       React.isValidElement(child) &&
-      (child.type as any).name !== "RightComponent",
+      !(child.type as any).isRightComponent,
   );
   const rightChildren = React.Children.toArray(children).filter(
     (child) =>
       React.isValidElement(child) &&
-      (child.type as any).name === "RightComponent",
+      (child.type as any).isRightComponent,
   );
 
   return (
