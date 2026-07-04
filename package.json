@@ -28,5 +28,9 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/bun": "latest"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "not ie 11"
+  ]
 }

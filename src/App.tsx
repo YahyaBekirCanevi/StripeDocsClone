@@ -134,10 +134,10 @@ function SectionComponent({
     <section
       id={id}
       data-section-title={title}
-      className="section-row border-b border-(--color-border-light) flex flex-col lg:flex-row w-full min-h-100 last:border-b-0 min-w-0"
+      className="section-row border-b border-(--color-border-light) flex flex-col md:flex-row w-full min-h-100 last:border-b-0 min-w-0"
     >
       {/* Left side: rich text */}
-      <div className="w-full lg:w-1/2 p-8 lg:p-12 min-w-0">
+      <div className="w-full md:w-1/2 p-6 md:p-10 min-w-0">
         <h2 className="text-2xl font-bold text-(--color-text-primary) mb-6 scroll-mt-24">
           {title}
         </h2>
@@ -147,8 +147,8 @@ function SectionComponent({
       </div>
 
       {/* Right side: sticky code blocks */}
-      <div className="w-full lg:w-1/2 text-(--color-text-code) relative min-w-0">
-        <div className="lg:sticky lg:top-19 p-8 lg:p-12 space-y-6 right-column-content">
+      <div className="w-full md:w-1/2 bg-(--color-code-bg) text-(--color-text-code) relative border-t md:border-t-0 md:border-l border-(--color-border-dark) min-w-0">
+        <div className="md:sticky md:top-[76px] p-6 md:p-10 space-y-6 right-column-content">
           {rightChildren}
         </div>
       </div>
