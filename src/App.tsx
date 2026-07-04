@@ -13,6 +13,7 @@ import {
   KeyboardArrowDown as KeyboardArrowDownIcon,
   ChevronRight as ChevronRightIcon,
   ExpandMore as ExpandMoreIcon,
+  MoreVert as MoreVertIcon,
 } from "@mui/icons-material";
 
 // Define types for navigation items
@@ -174,6 +175,8 @@ export function App() {
   // MUI Dropdowns states
   const [versionAnchor, setVersionAnchor] = useState<null | HTMLElement>(null);
   const [apiLanguageAnchor, setApiLanguageAnchor] =
+    useState<null | HTMLElement>(null);
+  const [mobileMenuAnchor, setMobileMenuAnchor] =
     useState<null | HTMLElement>(null);
   const [selectedVersion, setSelectedVersion] = useState("2026-07-04");
   const [selectedLanguage, setSelectedLanguage] = useState("Node.js");
@@ -360,7 +363,7 @@ export function App() {
           </div>
 
           {/* 5 inline buttons snapped to the right */}
-          <div className="flex items-center gap-0">
+          <div className="hidden md:flex items-center gap-0">
             {/* Version Dropdown */}
             <Button
               size="small"
@@ -483,6 +486,85 @@ export function App() {
             >
               Sign in &rarr;
             </Button>
+          </div>
+
+          {/* Mobile Navbar Menu (mobile only) */}
+          <div className="flex md:hidden items-center">
+            <IconButton
+              onClick={(e) => setMobileMenuAnchor(e.currentTarget)}
+              sx={{
+                color: "var(--color-text-primary)",
+                padding: "8px",
+                "&:hover": { backgroundColor: "var(--color-primary-light)" },
+              }}
+            >
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              anchorEl={mobileMenuAnchor}
+              open={Boolean(mobileMenuAnchor)}
+              onClose={() => setMobileMenuAnchor(null)}
+              transformOrigin={{ vertical: "top", horizontal: "right" }}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            >
+              {/* Version Option */}
+              <MenuItem
+                onClick={(e) => {
+                  setVersionAnchor(e.currentTarget);
+                  setMobileMenuAnchor(null);
+                }}
+                sx={{ fontSize: "14px" }}
+              >
+                Version: {selectedVersion}
+              </MenuItem>
+
+              {/* Language Option */}
+              <MenuItem
+                onClick={(e) => {
+                  setApiLanguageAnchor(e.currentTarget);
+                  setMobileMenuAnchor(null);
+                }}
+                sx={{ fontSize: "14px" }}
+              >
+                API Language: {selectedLanguage}
+              </MenuItem>
+
+              {/* Docs Link */}
+              <MenuItem
+                onClick={() => {
+                  setMobileMenuAnchor(null);
+                  window.location.hash = "docs";
+                }}
+                sx={{ fontSize: "14px" }}
+              >
+                Docs
+              </MenuItem>
+
+              {/* Support Link */}
+              <MenuItem
+                onClick={() => {
+                  setMobileMenuAnchor(null);
+                  window.location.hash = "support";
+                }}
+                sx={{ fontSize: "14px" }}
+              >
+                Support
+              </MenuItem>
+
+              {/* Sign In CTA */}
+              <MenuItem
+                onClick={() => {
+                  setMobileMenuAnchor(null);
+                }}
+                sx={{
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  color: "var(--color-primary)",
+                }}
+              >
+                Sign In &rarr;
+              </MenuItem>
+            </Menu>
           </div>
         </header>
 
