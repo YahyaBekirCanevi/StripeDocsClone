@@ -6,6 +6,8 @@ import { parseDocs } from "./markdoc";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
 import {
   Search as SearchIcon,
   KeyboardArrowDown as KeyboardArrowDownIcon,
@@ -159,6 +161,7 @@ function SectionComponent({
 
 export function App() {
   const [activeSection, setActiveSection] = useState("api-reference");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(
     {
       "GETTING STARTED": true,
@@ -191,6 +194,7 @@ export function App() {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
       setActiveSection(id);
+      setIsSidebarOpen(false);
     }
   };
 
@@ -234,8 +238,20 @@ export function App() {
 
   return (
     <div className="flex min-h-screen bg-(--color-code-bg)">
+      {/* Backdrop overlay for mobile sidebar */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/60 z-20 md:hidden transition-opacity"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* 250px Sidebar (left) */}
-      <aside className="w-(--sidebar-width) h-screen fixed top-0 left-0 border-r border-(--color-border-light) flex flex-col z-20">
+      <aside
+        className={`w-(--sidebar-width) h-screen fixed top-0 left-0 border-r border-(--color-border-light) flex flex-col z-30 transition-transform duration-300 md:translate-x-0 bg-(--color-sidebar-bg) ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
         {/* Header 'stripe' */}
         <div className="p-4 flex items-center">
           <span className="text-[16px] font-black tracking-0 text-(--color-text-primary) flex items-center gap-0 select-none">
@@ -322,10 +338,26 @@ export function App() {
       </aside>
 
       {/* Main Right Window */}
-      <div className="flex-1 min-h-screen pl-(--sidebar-width) min-w-0 flex flex-col">
+      <div className="flex-1 min-h-screen pl-0 md:pl-(--sidebar-width) min-w-0 flex flex-col">
         {/* 60px height top navbar */}
-        <header className="h-(--navbar-height) bg-(--color-code-bg) border-b border-(--color-border-light) sticky top-0 z-10 flex items-center justify-between px-8 select-none">
-          <div/>
+        <header className="h-(--navbar-height) bg-(--color-code-bg) border-b border-(--color-border-light) sticky top-0 z-10 flex items-center justify-between px-4 md:px-8 select-none">
+          <div className="flex items-center gap-1">
+            <IconButton
+              onClick={() => setIsSidebarOpen(true)}
+              sx={{
+                color: "var(--color-text-primary)",
+                padding: "6px",
+                marginRight: "4px",
+                display: { xs: "inline-flex", md: "none" },
+                "&:hover": { backgroundColor: "var(--color-primary-light)" },
+              }}
+            >
+              <MenuIcon style={{ fontSize: 20 }} />
+            </IconButton>
+            <span className="text-[12px] font-semibold text-(--color-text-muted) uppercase tracking-wider hidden sm:inline select-none">
+              Developer Dashboard
+            </span>
+          </div>
 
           {/* 5 inline buttons snapped to the right */}
           <div className="flex items-center gap-0">
